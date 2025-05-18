@@ -1,0 +1,17 @@
+# Task ID: 5
+# Title: Implement Texture Loading and Wall Rendering
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: Load wall textures from XPM files and implement textured wall rendering based on the raycasting results.
+# Details:
+1. Implement XPM texture loading using MiniLibX
+2. Create texture data structures to store loaded textures
+3. Calculate texture coordinates based on ray hit positions
+4. Implement wall rendering with the appropriate texture based on wall orientation
+5. Ensure textures are properly stretched/scaled according to wall distance
+6. Implement texture coordinate calculation to determine which part of the texture to display
+7. Optimize texture rendering for performance
+
+# Test Strategy:
+Test with different textures and verify that walls display correctly with textures corresponding to their orientation (NO, SO, WE, EA). Check for texture alignment and scaling issues.

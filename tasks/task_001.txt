@@ -1,0 +1,71 @@
+# Task ID: 1
+# Title: Setup Project Structure and MiniLibX Integration
+# Status: pending
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project directory structure, create necessary files, and set up the MiniLibX library integration.
+# Details:
+1. Create the directory structure as specified in the PRD
+2. Set up the Makefile with compilation rules for both mandatory and bonus parts
+3. Initialize the main header files (cub3d.h, structures.h, constants.h)
+4. Set up MiniLibX library linking in the Makefile
+5. Create a basic main.c with window initialization using MiniLibX
+6. Define initial data structures for the game state, player, and map
+7. Implement a simple window that can be opened and closed
+
+# Test Strategy:
+Compile the project and verify that a window opens and closes properly with ESC key or clicking the X button.
+
+# Subtasks:
+## 1. Create Project Directory Structure and Header Files [pending]
+### Dependencies: None
+### Description: Create the basic project directory structure and initialize essential header files with core data structures and constants.
+### Details:
+1. Create the following directory structure:
+   - src/ (for source files)
+   - include/ (for header files)
+   - assets/ (for textures and maps)
+   - lib/ (for libraries)
+2. Initialize header files in include/:
+   - cub3d.h: Main header with includes and function prototypes
+   - structures.h: Define core data structures (t_game, t_player, t_map, etc.)
+   - constants.h: Define game constants (window size, movement speed, etc.)
+3. In structures.h, define initial structs for:
+   - Game state (containing all other structs)
+   - Player position and orientation
+   - Map representation
+   - MLX window/image pointers
+4. Test by compiling the header files to check for syntax errors
+
+## 2. Setup Makefile and MiniLibX Integration [pending]
+### Dependencies: 1.1
+### Description: Create a comprehensive Makefile for the project and integrate the MiniLibX library for graphics handling.
+### Details:
+1. Create a Makefile with:
+   - Compilation rules for mandatory part (CFLAGS with -Wall -Wextra -Werror)
+   - Clean, fclean, re targets
+   - Separate compilation for bonus part when applicable
+2. Set up MiniLibX integration:
+   - Add library path to Makefile (check OS for correct path)
+   - Add proper linking flags (-lmlx -lXext -lX11 for Linux or appropriate flags for MacOS)
+   - Configure include paths for MLX headers
+3. Test Makefile by running 'make help' or similar target to display available commands
+4. Verify library linking by compiling a minimal test program that includes MLX headers
+
+## 3. Implement Basic Window Initialization [pending]
+### Dependencies: 1.1, 1.2
+### Description: Create a main.c file with basic MiniLibX window initialization and event handling for opening and closing the window.
+### Details:
+1. Create src/main.c file with:
+   - Basic includes of project headers and MLX
+   - Main function that initializes MLX (mlx_init)
+   - Window creation (mlx_new_window)
+   - Simple event handling:
+     * Setup close window event (ESC key and window X button)
+     * Register event hooks with mlx_hook
+   - Clean termination function to free resources
+2. Initialize a basic t_game struct with MLX pointers and window data
+3. Implement a simple loop (mlx_loop) to keep the window open
+4. Test by compiling and running the program - a window should open and close properly with ESC key or the X button
+5. Verify memory management by checking for leaks when closing the window
+

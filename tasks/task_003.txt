@@ -1,0 +1,17 @@
+# Task ID: 3
+# Title: Implement Map Validation
+# Status: pending
+# Dependencies: 2
+# Priority: high
+# Description: Create functions to validate the map structure, ensuring it meets all requirements (surrounded by walls, single player position, etc.).
+# Details:
+1. Create a 2D map representation from the parsed data
+2. Implement validation for map characters (0, 1, N, S, E, W)
+3. Check that the map is completely surrounded by walls using flood fill algorithm
+4. Validate that exactly one player starting position exists
+5. Check for invalid spacing within the map
+6. Implement detailed error reporting for each validation failure
+7. Ensure spaces around walls are properly handled according to the requirements
+
+# Test Strategy:
+Test with various maps including valid ones, maps with holes in walls, multiple player positions, invalid characters, and problematic spacing. Verify correct validation results and error messages.

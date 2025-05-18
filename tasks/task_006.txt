@@ -1,0 +1,51 @@
+# Task ID: 6
+# Title: Implement Floor and Ceiling Rendering
+# Status: pending
+# Dependencies: 5
+# Priority: medium
+# Description: Render the floor and ceiling with the specified RGB colors from the configuration file.
+# Details:
+1. Use the parsed RGB values for floor and ceiling colors
+2. Implement functions to fill the top half of the screen with ceiling color
+3. Implement functions to fill the bottom half of the screen with floor color
+4. Ensure proper integration with the wall rendering
+5. Optimize the rendering for performance
+6. Verify color conversion from RGB to the format required by MiniLibX
+
+# Test Strategy:
+Verify that floor and ceiling render with the correct colors specified in the configuration file. Test with different color values to ensure proper color representation.
+
+# Subtasks:
+## 1. Create RGB Color Conversion Functions [pending]
+### Dependencies: None
+### Description: Implement utility functions to convert RGB values from the configuration file to the format required by MiniLibX for rendering.
+### Details:
+1. Create a function `int create_trgb(int t, int r, int g, int b)` that combines transparency and RGB values into a single integer for MiniLibX.
+2. Implement a function `int parse_rgb_to_color(t_rgb rgb)` that takes the parsed RGB struct and converts it to the MiniLibX color format.
+3. Add validation to ensure RGB values are within valid range (0-255).
+4. Test the conversion functions with various RGB inputs to verify correct color representation.
+5. Document the color format conversion process for future reference.
+
+## 2. Implement Floor and Ceiling Drawing Functions [pending]
+### Dependencies: 6.1
+### Description: Create dedicated functions to render the floor and ceiling with their respective colors.
+### Details:
+1. Create a function `void draw_ceiling(t_data *data)` that fills the upper half of the screen with the ceiling color.
+2. Create a function `void draw_floor(t_data *data)` that fills the lower half of the screen with the floor color.
+3. Use the color conversion functions from subtask 1 to convert RGB values to MiniLibX format.
+4. Implement optimized drawing using horizontal line segments rather than pixel-by-pixel drawing.
+5. Calculate the dividing line between floor and ceiling based on window height.
+6. Test both functions individually to ensure they correctly fill their respective screen portions.
+
+## 3. Integrate Floor and Ceiling Rendering with Main Render Loop [pending]
+### Dependencies: 6.2
+### Description: Integrate the floor and ceiling rendering functions into the main rendering pipeline and ensure proper coordination with wall rendering.
+### Details:
+1. Modify the main rendering function to call `draw_ceiling()` and `draw_floor()` before rendering walls.
+2. Ensure the rendering order is: ceiling first, floor second, walls last (so walls properly overlay floor/ceiling).
+3. Add performance optimization by only redrawing floor/ceiling when necessary (e.g., on initial render or when window is resized).
+4. Implement a frame buffer approach if needed to prevent flickering during rendering.
+5. Add error handling to gracefully handle missing RGB values in the configuration.
+6. Test the complete rendering pipeline to ensure floor, ceiling, and walls all display correctly together.
+7. Measure and optimize performance if rendering speed is inadequate.
+

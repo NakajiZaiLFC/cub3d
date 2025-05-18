@@ -1,0 +1,17 @@
+# Task ID: 7
+# Title: Implement Player Movement and Collision Detection
+# Status: pending
+# Dependencies: 4
+# Priority: high
+# Description: Implement player movement controls (WASD) with proper collision detection against walls.
+# Details:
+1. Implement key press detection for W, A, S, D keys
+2. Calculate new player positions based on direction vector and movement speed
+3. Implement collision detection to prevent walking through walls
+4. Consider player size when checking for collisions
+5. Ensure smooth movement by using frame time for speed calculation
+6. Implement proper movement vector calculations for forward/backward and strafing
+7. Add a small buffer distance from walls to prevent clipping issues
+
+# Test Strategy:
+Test player movement in various directions, ensuring the player cannot move through walls. Verify that movement speed is consistent and that collision detection works correctly at different angles.

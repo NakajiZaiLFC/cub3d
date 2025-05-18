@@ -1,0 +1,68 @@
+# Task ID: 4
+# Title: Implement Basic Raycasting Algorithm
+# Status: pending
+# Dependencies: 3
+# Priority: high
+# Description: Implement the core raycasting algorithm to calculate ray directions, perform DDA algorithm, and determine wall distances.
+# Details:
+1. Implement player state initialization with position and direction vectors
+2. Create the camera plane vector perpendicular to direction
+3. Implement ray direction calculation for each screen column
+4. Implement the DDA (Digital Differential Analysis) algorithm to find wall intersections
+5. Calculate perpendicular wall distances to avoid fisheye effect
+6. Determine which wall face was hit (north, south, east, west)
+7. Calculate wall height for rendering
+8. Set up the main rendering loop that casts rays for each column of the screen
+
+# Test Strategy:
+Create a simple visualization of the raycasting results, showing walls as solid colors. Verify that walls appear at correct distances and that the fisheye effect is not present.
+
+# Subtasks:
+## 1. Implement Player State and Ray Direction Calculation [pending]
+### Dependencies: None
+### Description: Set up the player's initial state with position and direction vectors, create the camera plane, and implement ray direction calculation for each screen column.
+### Details:
+1. Define player state structure with position (x,y coordinates), direction vector (normalized), and camera plane vector (perpendicular to direction).
+2. Initialize player with starting values (position in the map, direction facing, and appropriate camera plane).
+3. Implement the ray direction calculation function that:
+   - Takes screen x-coordinate as input
+   - Calculates camera x position (-1 to 1 across screen width)
+   - Computes ray direction vector using player direction and camera plane
+   - Returns normalized ray direction vector
+4. Test by visualizing ray directions at different screen positions and verifying they form the correct field of view.
+
+## 2. Implement DDA Algorithm for Wall Detection [pending]
+### Dependencies: 4.1
+### Description: Implement the Digital Differential Analysis (DDA) algorithm to efficiently find wall intersections along ray paths.
+### Details:
+1. Using the ray direction from subtask 1, implement the DDA algorithm:
+   - Calculate initial DDA values (sideDist, deltaDist)
+   - Determine step direction (which way to move in x and y)
+   - Perform the DDA loop until a wall is hit
+   - Track which cell was hit and which side of the wall was hit (N/S/E/W)
+2. Implement a function that takes ray direction and player position as input and returns:
+   - Map coordinates of the hit wall
+   - Distance to the wall
+   - Which face of the wall was hit (to determine texture later)
+3. Add debug visualization to show the path of the ray and the hit point
+4. Test with different ray directions and player positions to ensure walls are detected correctly.
+
+## 3. Calculate Wall Distances and Implement Main Rendering Loop [pending]
+### Dependencies: 4.1, 4.2
+### Description: Calculate perpendicular wall distances to avoid fisheye effect, determine wall heights, and implement the main rendering loop.
+### Details:
+1. Implement perpendicular distance calculation:
+   - Use the wall hit information from the DDA algorithm
+   - Calculate the perpendicular distance (not the Euclidean distance) to avoid fisheye effect
+   - Formula depends on which side was hit (X or Y)
+2. Implement wall height calculation:
+   - Calculate line height based on screen height and perpendicular distance
+   - Determine drawing start and end y-coordinates
+3. Set up the main rendering loop:
+   - For each vertical column of the screen
+   - Calculate ray direction
+   - Perform DDA to find wall hit
+   - Calculate perpendicular distance and wall height
+   - Store results for rendering (will be used in future tasks)
+4. Test the complete algorithm by printing calculated wall heights or using simple placeholder rendering to verify distances are correct at different positions.
+

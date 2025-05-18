@@ -1,0 +1,17 @@
+# Task ID: 8
+# Title: Implement View Rotation
+# Status: pending
+# Dependencies: 7
+# Priority: medium
+# Description: Add functionality to rotate the player's view using the left and right arrow keys.
+# Details:
+1. Implement key press detection for left and right arrow keys
+2. Create rotation matrix functions to rotate the direction vector
+3. Update both the direction vector and camera plane vector during rotation
+4. Ensure smooth rotation by using frame time for rotation speed
+5. Implement proper vector normalization after rotation
+6. Ensure the camera plane remains perpendicular to the direction vector
+7. Add rotation speed constant for easy adjustment
+
+# Test Strategy:
+Test view rotation with arrow keys, ensuring smooth and consistent rotation. Verify that the view rotates correctly in both directions and that the perspective remains correct after rotation.

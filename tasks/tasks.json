@@ -1,0 +1,301 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup Project Structure and MiniLibX Integration",
+      "description": "Initialize the project directory structure, create necessary files, and set up the MiniLibX library integration.",
+      "status": "pending",
+      "dependencies": [],
+      "priority": "high",
+      "details": "1. Create the directory structure as specified in the PRD\n2. Set up the Makefile with compilation rules for both mandatory and bonus parts\n3. Initialize the main header files (cub3d.h, structures.h, constants.h)\n4. Set up MiniLibX library linking in the Makefile\n5. Create a basic main.c with window initialization using MiniLibX\n6. Define initial data structures for the game state, player, and map\n7. Implement a simple window that can be opened and closed",
+      "testStrategy": "Compile the project and verify that a window opens and closes properly with ESC key or clicking the X button.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create Project Directory Structure and Header Files",
+          "description": "Create the basic project directory structure and initialize essential header files with core data structures and constants.",
+          "dependencies": [],
+          "details": "1. Create the following directory structure:\n   - src/ (for source files)\n   - include/ (for header files)\n   - assets/ (for textures and maps)\n   - lib/ (for libraries)\n2. Initialize header files in include/:\n   - cub3d.h: Main header with includes and function prototypes\n   - structures.h: Define core data structures (t_game, t_player, t_map, etc.)\n   - constants.h: Define game constants (window size, movement speed, etc.)\n3. In structures.h, define initial structs for:\n   - Game state (containing all other structs)\n   - Player position and orientation\n   - Map representation\n   - MLX window/image pointers\n4. Test by compiling the header files to check for syntax errors",
+          "status": "pending",
+          "parentTaskId": 1
+        },
+        {
+          "id": 2,
+          "title": "Setup Makefile and MiniLibX Integration",
+          "description": "Create a comprehensive Makefile for the project and integrate the MiniLibX library for graphics handling.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Create a Makefile with:\n   - Compilation rules for mandatory part (CFLAGS with -Wall -Wextra -Werror)\n   - Clean, fclean, re targets\n   - Separate compilation for bonus part when applicable\n2. Set up MiniLibX integration:\n   - Add library path to Makefile (check OS for correct path)\n   - Add proper linking flags (-lmlx -lXext -lX11 for Linux or appropriate flags for MacOS)\n   - Configure include paths for MLX headers\n3. Test Makefile by running 'make help' or similar target to display available commands\n4. Verify library linking by compiling a minimal test program that includes MLX headers",
+          "status": "pending",
+          "parentTaskId": 1
+        },
+        {
+          "id": 3,
+          "title": "Implement Basic Window Initialization",
+          "description": "Create a main.c file with basic MiniLibX window initialization and event handling for opening and closing the window.",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Create src/main.c file with:\n   - Basic includes of project headers and MLX\n   - Main function that initializes MLX (mlx_init)\n   - Window creation (mlx_new_window)\n   - Simple event handling:\n     * Setup close window event (ESC key and window X button)\n     * Register event hooks with mlx_hook\n   - Clean termination function to free resources\n2. Initialize a basic t_game struct with MLX pointers and window data\n3. Implement a simple loop (mlx_loop) to keep the window open\n4. Test by compiling and running the program - a window should open and close properly with ESC key or the X button\n5. Verify memory management by checking for leaks when closing the window",
+          "status": "pending",
+          "parentTaskId": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Implement Configuration File Parser",
+      "description": "Create a parser to read and validate the .cub configuration file containing texture paths, colors, and map data.",
+      "status": "pending",
+      "dependencies": [
+        1
+      ],
+      "priority": "high",
+      "details": "1. Implement file reading functionality to load .cub files\n2. Create parsers for texture paths (NO, SO, WE, EA)\n3. Implement RGB color parsing for floor (F) and ceiling (C)\n4. Create a function to separate the map data from configuration elements\n5. Validate the configuration file format and handle syntax errors\n6. Store parsed data in appropriate data structures\n7. Implement error handling for invalid file formats or missing elements",
+      "testStrategy": "Test with various .cub files including valid configurations, files with syntax errors, missing elements, and edge cases. Verify correct error messages are displayed for invalid inputs."
+    },
+    {
+      "id": 3,
+      "title": "Implement Map Validation",
+      "description": "Create functions to validate the map structure, ensuring it meets all requirements (surrounded by walls, single player position, etc.).",
+      "status": "pending",
+      "dependencies": [
+        2
+      ],
+      "priority": "high",
+      "details": "1. Create a 2D map representation from the parsed data\n2. Implement validation for map characters (0, 1, N, S, E, W)\n3. Check that the map is completely surrounded by walls using flood fill algorithm\n4. Validate that exactly one player starting position exists\n5. Check for invalid spacing within the map\n6. Implement detailed error reporting for each validation failure\n7. Ensure spaces around walls are properly handled according to the requirements",
+      "testStrategy": "Test with various maps including valid ones, maps with holes in walls, multiple player positions, invalid characters, and problematic spacing. Verify correct validation results and error messages."
+    },
+    {
+      "id": 4,
+      "title": "Implement Basic Raycasting Algorithm",
+      "description": "Implement the core raycasting algorithm to calculate ray directions, perform DDA algorithm, and determine wall distances.",
+      "status": "pending",
+      "dependencies": [
+        3
+      ],
+      "priority": "high",
+      "details": "1. Implement player state initialization with position and direction vectors\n2. Create the camera plane vector perpendicular to direction\n3. Implement ray direction calculation for each screen column\n4. Implement the DDA (Digital Differential Analysis) algorithm to find wall intersections\n5. Calculate perpendicular wall distances to avoid fisheye effect\n6. Determine which wall face was hit (north, south, east, west)\n7. Calculate wall height for rendering\n8. Set up the main rendering loop that casts rays for each column of the screen",
+      "testStrategy": "Create a simple visualization of the raycasting results, showing walls as solid colors. Verify that walls appear at correct distances and that the fisheye effect is not present.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Player State and Ray Direction Calculation",
+          "description": "Set up the player's initial state with position and direction vectors, create the camera plane, and implement ray direction calculation for each screen column.",
+          "dependencies": [],
+          "details": "1. Define player state structure with position (x,y coordinates), direction vector (normalized), and camera plane vector (perpendicular to direction).\n2. Initialize player with starting values (position in the map, direction facing, and appropriate camera plane).\n3. Implement the ray direction calculation function that:\n   - Takes screen x-coordinate as input\n   - Calculates camera x position (-1 to 1 across screen width)\n   - Computes ray direction vector using player direction and camera plane\n   - Returns normalized ray direction vector\n4. Test by visualizing ray directions at different screen positions and verifying they form the correct field of view.",
+          "status": "pending",
+          "parentTaskId": 4
+        },
+        {
+          "id": 2,
+          "title": "Implement DDA Algorithm for Wall Detection",
+          "description": "Implement the Digital Differential Analysis (DDA) algorithm to efficiently find wall intersections along ray paths.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Using the ray direction from subtask 1, implement the DDA algorithm:\n   - Calculate initial DDA values (sideDist, deltaDist)\n   - Determine step direction (which way to move in x and y)\n   - Perform the DDA loop until a wall is hit\n   - Track which cell was hit and which side of the wall was hit (N/S/E/W)\n2. Implement a function that takes ray direction and player position as input and returns:\n   - Map coordinates of the hit wall\n   - Distance to the wall\n   - Which face of the wall was hit (to determine texture later)\n3. Add debug visualization to show the path of the ray and the hit point\n4. Test with different ray directions and player positions to ensure walls are detected correctly.",
+          "status": "pending",
+          "parentTaskId": 4
+        },
+        {
+          "id": 3,
+          "title": "Calculate Wall Distances and Implement Main Rendering Loop",
+          "description": "Calculate perpendicular wall distances to avoid fisheye effect, determine wall heights, and implement the main rendering loop.",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Implement perpendicular distance calculation:\n   - Use the wall hit information from the DDA algorithm\n   - Calculate the perpendicular distance (not the Euclidean distance) to avoid fisheye effect\n   - Formula depends on which side was hit (X or Y)\n2. Implement wall height calculation:\n   - Calculate line height based on screen height and perpendicular distance\n   - Determine drawing start and end y-coordinates\n3. Set up the main rendering loop:\n   - For each vertical column of the screen\n   - Calculate ray direction\n   - Perform DDA to find wall hit\n   - Calculate perpendicular distance and wall height\n   - Store results for rendering (will be used in future tasks)\n4. Test the complete algorithm by printing calculated wall heights or using simple placeholder rendering to verify distances are correct at different positions.",
+          "status": "pending",
+          "parentTaskId": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Implement Texture Loading and Wall Rendering",
+      "description": "Load wall textures from XPM files and implement textured wall rendering based on the raycasting results.",
+      "status": "pending",
+      "dependencies": [
+        4
+      ],
+      "priority": "high",
+      "details": "1. Implement XPM texture loading using MiniLibX\n2. Create texture data structures to store loaded textures\n3. Calculate texture coordinates based on ray hit positions\n4. Implement wall rendering with the appropriate texture based on wall orientation\n5. Ensure textures are properly stretched/scaled according to wall distance\n6. Implement texture coordinate calculation to determine which part of the texture to display\n7. Optimize texture rendering for performance",
+      "testStrategy": "Test with different textures and verify that walls display correctly with textures corresponding to their orientation (NO, SO, WE, EA). Check for texture alignment and scaling issues."
+    },
+    {
+      "id": 6,
+      "title": "Implement Floor and Ceiling Rendering",
+      "description": "Render the floor and ceiling with the specified RGB colors from the configuration file.",
+      "status": "pending",
+      "dependencies": [
+        5
+      ],
+      "priority": "medium",
+      "details": "1. Use the parsed RGB values for floor and ceiling colors\n2. Implement functions to fill the top half of the screen with ceiling color\n3. Implement functions to fill the bottom half of the screen with floor color\n4. Ensure proper integration with the wall rendering\n5. Optimize the rendering for performance\n6. Verify color conversion from RGB to the format required by MiniLibX",
+      "testStrategy": "Verify that floor and ceiling render with the correct colors specified in the configuration file. Test with different color values to ensure proper color representation.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create RGB Color Conversion Functions",
+          "description": "Implement utility functions to convert RGB values from the configuration file to the format required by MiniLibX for rendering.",
+          "dependencies": [],
+          "details": "1. Create a function `int create_trgb(int t, int r, int g, int b)` that combines transparency and RGB values into a single integer for MiniLibX.\n2. Implement a function `int parse_rgb_to_color(t_rgb rgb)` that takes the parsed RGB struct and converts it to the MiniLibX color format.\n3. Add validation to ensure RGB values are within valid range (0-255).\n4. Test the conversion functions with various RGB inputs to verify correct color representation.\n5. Document the color format conversion process for future reference.",
+          "status": "pending",
+          "parentTaskId": 6
+        },
+        {
+          "id": 2,
+          "title": "Implement Floor and Ceiling Drawing Functions",
+          "description": "Create dedicated functions to render the floor and ceiling with their respective colors.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Create a function `void draw_ceiling(t_data *data)` that fills the upper half of the screen with the ceiling color.\n2. Create a function `void draw_floor(t_data *data)` that fills the lower half of the screen with the floor color.\n3. Use the color conversion functions from subtask 1 to convert RGB values to MiniLibX format.\n4. Implement optimized drawing using horizontal line segments rather than pixel-by-pixel drawing.\n5. Calculate the dividing line between floor and ceiling based on window height.\n6. Test both functions individually to ensure they correctly fill their respective screen portions.",
+          "status": "pending",
+          "parentTaskId": 6
+        },
+        {
+          "id": 3,
+          "title": "Integrate Floor and Ceiling Rendering with Main Render Loop",
+          "description": "Integrate the floor and ceiling rendering functions into the main rendering pipeline and ensure proper coordination with wall rendering.",
+          "dependencies": [
+            2
+          ],
+          "details": "1. Modify the main rendering function to call `draw_ceiling()` and `draw_floor()` before rendering walls.\n2. Ensure the rendering order is: ceiling first, floor second, walls last (so walls properly overlay floor/ceiling).\n3. Add performance optimization by only redrawing floor/ceiling when necessary (e.g., on initial render or when window is resized).\n4. Implement a frame buffer approach if needed to prevent flickering during rendering.\n5. Add error handling to gracefully handle missing RGB values in the configuration.\n6. Test the complete rendering pipeline to ensure floor, ceiling, and walls all display correctly together.\n7. Measure and optimize performance if rendering speed is inadequate.",
+          "status": "pending",
+          "parentTaskId": 6
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Implement Player Movement and Collision Detection",
+      "description": "Implement player movement controls (WASD) with proper collision detection against walls.",
+      "status": "pending",
+      "dependencies": [
+        4
+      ],
+      "priority": "high",
+      "details": "1. Implement key press detection for W, A, S, D keys\n2. Calculate new player positions based on direction vector and movement speed\n3. Implement collision detection to prevent walking through walls\n4. Consider player size when checking for collisions\n5. Ensure smooth movement by using frame time for speed calculation\n6. Implement proper movement vector calculations for forward/backward and strafing\n7. Add a small buffer distance from walls to prevent clipping issues",
+      "testStrategy": "Test player movement in various directions, ensuring the player cannot move through walls. Verify that movement speed is consistent and that collision detection works correctly at different angles."
+    },
+    {
+      "id": 8,
+      "title": "Implement View Rotation",
+      "description": "Add functionality to rotate the player's view using the left and right arrow keys.",
+      "status": "pending",
+      "dependencies": [
+        7
+      ],
+      "priority": "medium",
+      "details": "1. Implement key press detection for left and right arrow keys\n2. Create rotation matrix functions to rotate the direction vector\n3. Update both the direction vector and camera plane vector during rotation\n4. Ensure smooth rotation by using frame time for rotation speed\n5. Implement proper vector normalization after rotation\n6. Ensure the camera plane remains perpendicular to the direction vector\n7. Add rotation speed constant for easy adjustment",
+      "testStrategy": "Test view rotation with arrow keys, ensuring smooth and consistent rotation. Verify that the view rotates correctly in both directions and that the perspective remains correct after rotation."
+    },
+    {
+      "id": 9,
+      "title": "Implement Comprehensive Error Handling",
+      "description": "Add robust error handling throughout the application with specific error messages for different scenarios.",
+      "status": "pending",
+      "dependencies": [
+        2,
+        3,
+        5
+      ],
+      "priority": "medium",
+      "details": "1. Create a centralized error handling system\n2. Implement specific error messages for different error types\n3. Add error checking for memory allocation failures\n4. Implement proper resource cleanup on error conditions\n5. Add validation for texture file existence and format\n6. Improve map validation error reporting with line numbers\n7. Ensure all error messages start with \"Error\\n\" followed by specific details\n8. Implement proper exit codes for different error conditions",
+      "testStrategy": "Test with various error conditions including invalid files, malformed maps, missing textures, and memory allocation failures. Verify that appropriate error messages are displayed and resources are properly cleaned up.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create a Centralized Error Handling System",
+          "description": "Implement a central error handling module that standardizes error reporting, categorizes errors, and provides consistent formatting.",
+          "dependencies": [],
+          "details": "1. Create an error.h/.c module with error types enum (MEMORY_ERROR, FILE_ERROR, VALIDATION_ERROR, etc.)\n2. Implement error_report() function that takes error type, message, and optional context\n3. Ensure all error messages start with 'Error\\n' followed by specific details\n4. Add exit code mapping for different error types\n5. Implement logging functionality to capture errors\n6. Add error context structure to pass additional information like line numbers\n7. Test with various error scenarios to ensure consistent formatting",
+          "status": "pending",
+          "parentTaskId": 9
+        },
+        {
+          "id": 2,
+          "title": "Implement Input Validation and File Error Handling",
+          "description": "Add error checking for all file operations and input validation with appropriate error messages.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Add validation for texture file existence before loading\n2. Check texture file format compatibility\n3. Implement map file validation with line number reporting\n4. Add error handling for config file parsing failures\n5. Validate all user inputs with specific error messages\n6. Use the centralized error system from subtask 1 to report all errors\n7. Test with invalid files and inputs to verify error messages are clear and helpful\n8. Ensure all file operations check for failures and report appropriate errors",
+          "status": "pending",
+          "parentTaskId": 9
+        },
+        {
+          "id": 3,
+          "title": "Implement Memory Management and Resource Cleanup",
+          "description": "Add error checking for memory operations and ensure proper resource cleanup in error conditions.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Add checks after all memory allocations to detect failures\n2. Implement cleanup functions for each resource type (textures, maps, etc.)\n3. Create resource tracking to ensure all allocations are freed on error\n4. Modify existing code to call error handling with proper cleanup on failure\n5. Implement a cleanup stack that tracks resources to be freed on error\n6. Add graceful degradation where possible (e.g., fall back to default textures)\n7. Test with simulated memory failures to verify proper cleanup\n8. Ensure all error paths properly release resources before exiting",
+          "status": "pending",
+          "parentTaskId": 9
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Implement Clean Exit and Memory Management",
+      "description": "Ensure proper cleanup of all resources when the game exits, either normally or due to errors.",
+      "status": "pending",
+      "dependencies": [
+        1,
+        2,
+        5,
+        7
+      ],
+      "priority": "medium",
+      "details": "1. Implement proper event handling for window close button\n2. Add ESC key detection for game exit\n3. Create functions to free all allocated memory\n4. Implement proper MiniLibX resource cleanup\n5. Ensure textures are properly unloaded\n6. Add signal handling for unexpected termination\n7. Implement a clean exit function that can be called from any point in the program\n8. Add memory leak detection during development",
+      "testStrategy": "Test various exit scenarios including ESC key, window close button, and error conditions. Use memory analysis tools like Valgrind to verify there are no memory leaks or resource leaks upon exit.",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Exit Event Handling and Clean Exit Function",
+          "description": "Create a central exit function and implement handlers for window close button and ESC key to trigger clean program termination.",
+          "dependencies": [],
+          "details": "1. Create a `clean_exit` function that takes an exit code parameter and can be called from anywhere in the program.\n2. Implement MiniLibX event handling for the window close button (red X) to call the clean_exit function.\n3. Add keyboard event handling to detect ESC key press and call clean_exit function.\n4. Set up a basic structure for the clean_exit function that will later call memory cleanup functions.\n5. Test by verifying the program exits properly when the close button is clicked or ESC is pressed.\n6. Ensure the exit code is properly passed to the system.",
+          "status": "pending",
+          "parentTaskId": 10
+        },
+        {
+          "id": 2,
+          "title": "Implement Resource Cleanup Functions",
+          "description": "Create functions to properly free all allocated resources including MiniLibX resources and loaded textures.",
+          "dependencies": [
+            1
+          ],
+          "details": "1. Create a function to free all MiniLibX resources (windows, images).\n2. Implement a function to unload and free all loaded textures.\n3. Add a function to free any other game-specific allocated memory (map data, sprites, etc.).\n4. Update the clean_exit function to call these cleanup functions in the correct order.\n5. Test by ensuring no resources remain allocated after exit.\n6. Add debug outputs during cleanup to verify each resource is being freed properly during development.",
+          "status": "pending",
+          "parentTaskId": 10
+        },
+        {
+          "id": 3,
+          "title": "Implement Signal Handling and Memory Leak Detection",
+          "description": "Add signal handlers for unexpected termination and implement memory leak detection for development.",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "1. Implement signal handlers for common signals (SIGINT, SIGSEGV, etc.) to call the clean_exit function.\n2. Add conditional compilation for development mode that includes memory tracking.\n3. Create a memory tracking system that logs allocations and deallocations during development.\n4. Implement a function to report any memory leaks when the program exits in development mode.\n5. Add a debug flag to enable/disable detailed memory reporting.\n6. Test by intentionally triggering signals and checking that resources are properly cleaned up.\n7. Verify memory leak detection by intentionally leaking memory and confirming the system detects it.",
+          "status": "pending",
+          "parentTaskId": 10
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "projectName": "Cub3D Implementation",
+    "totalTasks": 10,
+    "sourceFile": "cub3d_prd.txt",
+    "generatedAt": "2023-11-16"
+  }
+}

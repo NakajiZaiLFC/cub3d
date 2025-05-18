@@ -1,0 +1,17 @@
+# Task ID: 2
+# Title: Implement Configuration File Parser
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Create a parser to read and validate the .cub configuration file containing texture paths, colors, and map data.
+# Details:
+1. Implement file reading functionality to load .cub files
+2. Create parsers for texture paths (NO, SO, WE, EA)
+3. Implement RGB color parsing for floor (F) and ceiling (C)
+4. Create a function to separate the map data from configuration elements
+5. Validate the configuration file format and handle syntax errors
+6. Store parsed data in appropriate data structures
+7. Implement error handling for invalid file formats or missing elements
+
+# Test Strategy:
+Test with various .cub files including valid configurations, files with syntax errors, missing elements, and edge cases. Verify correct error messages are displayed for invalid inputs.
